@@ -33,7 +33,7 @@ pipeline {
                 
                 echo "Building application image"
 
-                 withCredentials([usernameColonPassword(credentialsId: njumaili-harbor-auth, variable: 'HARBOR-AUTH')]) {
+                 withCredentials([usernameColonPassword(credentialsId: 'njumaili-harbor-auth', variable: 'HARBOR-AUTH')]) {
                     script {
                         sh 'docker build -t $APP_IMAGE_NAME-$COMMIT_HASH -f ./app/Dockerfile ./afs-labs-student'
                         docker.withRegistry('https://$HARBOR_REGISTRY', 'njumaili-harbor-auth') {
