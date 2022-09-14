@@ -1,10 +1,8 @@
 pipeline {
     agent {
-
-       
+        
         label 'jenkins-agent'
     }
-
      environment {
         PIPELINE_HASH = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
         HARBOR_REGISTRY = 'harbor.dev.afsmtddso.com'
@@ -20,7 +18,7 @@ pipeline {
                 //TODO("Lab 3 - Introduction to Automated Builds"): add github url
                 sh 'git clone https://github.com/natejums/afs-labs-student.git'
                 
-             dir('afs-labs-student') {
+                 dir('afs-labs-student') {
                     script {
                         env.COMMIT_HASH = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
                     }
@@ -68,7 +66,7 @@ pipeline {
             steps {
                 echo "Building database image"
 
-             withCredentials([usernameColonPassword(credentialsId: 'njumaili-harbor-auth', variable: 'HARBOR-AUTH')]) {
+                withCredentials([usernameColonPassword(credentialsId: 'njumaili-harbor-auth', variable: 'HARBOR-AUTH')]) {
                     script {
                         sh 'docker build -t $DB_IMAGE_NAME-$COMMIT_HASH -f ./db/Dockerfile ./afs-labs-student'
                         docker.withRegistry('https://$HARBOR_REGISTRY', 'njumaili-harbor-auth') {
