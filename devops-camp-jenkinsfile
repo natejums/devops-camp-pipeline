@@ -20,11 +20,12 @@ pipeline {
                 //TODO("Lab 3 - Introduction to Automated Builds"): add github url
                 sh 'git clone https://github.com/natejums/afs-labs-student.git'
                 
-                dir('afs-labs-student') {
+             dir('afs-labs-student') {
                     script {
                         env.COMMIT_HASH = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
                     }
-                }                
+                }  
+              
                 //TODO("Lab 4 - Artifact Management"): add COMMIT_HASH variable
             }
         }
@@ -42,6 +43,8 @@ pipeline {
                             sh 'docker push $HARBOR_REGISTRY/$HARBOR_PROJECT/$APP_IMAGE_NAME:$COMMIT_HASH-$PIPELINE_HASH'
                         }
                     }
+
+                 }
                 //TODO("Lab 4 - Artifact Management"): build the docker app image
             }
 
